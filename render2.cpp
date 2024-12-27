@@ -13,6 +13,7 @@ float ooz;  // 透视投影
 int xp, yp; //渲染在画布上的坐标
 int idx;
 float offsetX = 0;
+int dire = 1;
 
 float PI = 3.1415926535;
 float R = 20;  //大圆半径，绕z轴的圆的半径
@@ -130,7 +131,11 @@ int main() {
         A += 0.009; // 更新旋转的角度
         B += 0.005;
         C += 0.002;
-        offsetX += 0.001;
+
+        offsetX += 0.01 * dire;
+        if (offsetX > 30 || offsetX < 0){
+            dire *= -1;
+        }
         usleep(500);
     }
     return 0;
