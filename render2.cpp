@@ -6,12 +6,13 @@
 // 甜甜圈光照模型实现
 // 对render文件稍作修改，并且添加了光照模型。
 
-float A, B, C; //旋转角度
+float A=0, B=0, C=0; //旋转角度
 float x, y, z;  //旋转和平移后的三维坐标
 float doughnutX, doughnutY, doughnutZ; //旋转和平移之前的三维坐标
 float ooz;  // 透视投影
 int xp, yp; //渲染在画布上的坐标
 int idx;
+float offsetX = 0;
 
 float PI = 3.1415926535;
 float R = 20;  //大圆半径，绕z轴的圆的半径
@@ -28,7 +29,7 @@ float K1 = 50;  // 透视投影的缩放系数，代表焦距
 float incrementSpeed = 0.06; //循环间隔
 
 // 光源位置
-float lightX = -1, lightY = 1, lightZ = -1;
+float lightX = 20, lightY = -30, lightZ = -30;
 float lightMagnitude;
 
 // 初始化光源的方向
@@ -51,25 +52,30 @@ float calculateLightIntensity(float nx, float ny, float nz) {
     return dot > 0 ? dot : 0; // 保证亮度非负
 }
 
-float caculateX(int i, int j, int k){ //根据旋转公式推导
+float caculateX(float i, float j, float k){ //根据旋转公式推导
     return j * sin(A) * sin(B) * cos(C) - k * cos(A) * sin(B) * cos(C) +
            j * cos(A) * sin(C) + k * sin(A) * sin(C) + i * cos(B) * cos(C);
 } 
 
-float caculateY(int i, int j, int k){
+float caculateY(float i, float j, float k){
     return j * cos(A) * cos(C) + k * sin(A) * cos(C) - j * sin(A) * sin(B) * sin(C) + 
            k * cos(A) * sin(B) * sin(C) - i * cos(B) * sin(C);
 }
 
-float caculateZ(int i, int j, int k){
+float caculateZ(float i, float j, float k){
     return k * cos(A) * cos(B) - j * sin(A) * cos(B) + i * sin(B);
 }
 
 void caculateForSurface(float dX, float dY, float dZ, float nx, float ny, float nz) {
 	// dX,dY,dZ表示三维坐标，nx,ny,nz表示法向量。
-    x = caculateX(dX, dY, dZ);
+    x = caculateX(dX, dY, dZ) + offsetX;
     y = caculateY(dX, dY, dZ);
     z = caculateZ(dX, dY, dZ) + distanceFromCam; // 先旋转后平移
+
+    // 对法向量进行旋转， 不需要平移
+    float rotate_nx = caculateX(nx, ny, nz);
+    float rotate_ny = caculateY(nx, ny, nz);
+    float rotate_nz = caculateZ(nx, ny, nz);
 
     ooz = 1 / z; //透视投影的比例
 
@@ -82,10 +88,12 @@ void caculateForSurface(float dX, float dY, float dZ, float nx, float ny, float 
             zBuffer[idx] = ooz;  //zbuffer算法，确定遮挡关系
 
             // 计算光强
-            float intensity = calculateLightIntensity(x, y, z - distanceFromCam);
+            float intensity = calculateLightIntensity(rotate_nx, rotate_ny, rotate_nz); //正确的光照
+            // intensity = calculateLightIntensity(x, y, z - distanceFromCam); //这个光照，有点玻璃材质的感觉
 
             // 根据光强选择字符
-            char luminance = "+*:;~=!@$&#"[(int)(intensity * 11)];
+            // char luminance = "+*:;~=!@$&#"[(int)(intensity * 11)];
+            char luminance = ".,-~:;=!*#$@"[(int)(intensity * 12)];
             buffer[idx] = luminance;
         }
     }
@@ -119,8 +127,10 @@ int main() {
             putchar(k % width ? buffer[k] : '\n');  // 输出字符, 每一行结束都要输出回车
         }
 
-        A += 0.005; // 更新旋转的角度
+        A += 0.009; // 更新旋转的角度
         B += 0.005;
+        C += 0.002;
+        offsetX += 0.001;
         usleep(500);
     }
     return 0;
