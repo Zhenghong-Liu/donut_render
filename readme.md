@@ -91,34 +91,34 @@ I：光照强度
 曲面的某点的法向量可以通过两个切向量的叉积求得。这两个切向量是由曲面的参数方程分别对 $\theta$ 和 $\phi$求偏导得到的。
 
 $$
-N = \frac{\partial P}{\partial \theta} \times \frac{\partial P}{\partial \phi}
+\vec{N} = \frac{\partial \vec{P}}{\partial \theta} \times \frac{\partial \vec{P}}{\partial \phi}
 $$
 
-其中 $P(\theta, \phi) = [x(\theta, \phi), y(\theta, \phi), z(\theta, \phi)]$ 表示环面上的点
+其中 $\vec{P}(\theta, \phi) = [x(\theta, \phi), y(\theta, \phi), z(\theta, \phi)]$ 表示环面上的点
 
 1) 对 $\theta$ 求导：
 
 $$
-\frac{\partial P}{\partial \theta} = [-(R + rcos\phi)sin\theta, (R + rcos\phi)cos\theta, 0]
+\frac{\partial \vec{P}}{\partial \theta} = [-(R + rcos\phi)sin\theta, (R + rcos\phi)cos\theta, 0]
 $$
 
 2) 对 $\phi$ 求导
 
 $$
-\frac{\partial P}{\partial \phi} = [-rsin\phi cos\theta, -rsin\phi sin\theta, rcos\phi]
+\frac{\partial \vec{P}}{\partial \phi} = [-rsin\phi cos\theta, -rsin\phi sin\theta, rcos\phi]
 $$
 
 #### 叉积计算法向量
 
 给定两个向量：
 $$
-\mathbf{a} = (a_1, a_2, a_3), \quad \mathbf{b} = (b_1, b_2, b_3)
+\vec{a} = (a_1, a_2, a_3), \quad \vec{b} = (b_1, b_2, b_3)
 $$
 
 它们的叉积定义为：
 $$
-\mathbf{a} \times \mathbf{b} = \begin{vmatrix}
-\mathbf{i} & \mathbf{j} & \mathbf{k} \\
+\vec{a} \times \vec{b} = \begin{vmatrix}
+\vec{i} & \vec{j} & \vec{k} \\
 a_1 & a_2 & a_3 \\
 b_1 & b_2 & b_3
 \end{vmatrix}
@@ -127,29 +127,27 @@ $$
 展开行列式时，每个分量会用到代数余子式：
 
 $$
-\mathbf{a} \times \mathbf{b} =
-\mathbf{i} \begin{vmatrix} a_2 & a_3 \\ b_2 & b_3 \end{vmatrix}
-- \mathbf{j} \begin{vmatrix} a_1 & a_3 \\ b_1 & b_3 \end{vmatrix}
-+ \mathbf{k} \begin{vmatrix} a_1 & a_2 \\ b_1 & b_2 \end{vmatrix}
+\vec{a} \times \vec{b} =
+\vec{i} \begin{vmatrix} a_2 & a_3 \\ b_2 & b_3 \end{vmatrix} - \vec{j} \begin{vmatrix} a_1 & a_3 \\ b_1 & b_3 \end{vmatrix} + \vec{k} \begin{vmatrix} a_1 & a_2 \\ b_1 & b_2 \end{vmatrix}
 $$
 
 由此，我们开始计算 $N = \frac{\partial P}{\partial \theta} \times \frac{\partial P}{\partial \phi}$
 
 可得：
 $$
-\mathbf{N}_x = \frac{\partial y}{\partial \theta} \frac{\partial z}{\partial \phi} - \frac{\partial z}{\partial \theta} \frac{\partial y}{\partial \phi}
+\vec{N}_x = \frac{\partial y}{\partial \theta} \frac{\partial z}{\partial \phi} - \frac{\partial z}{\partial \theta} \frac{\partial y}{\partial \phi}
 $$
 $$
-\mathbf{N}_y = \frac{\partial z}{\partial \theta} \frac{\partial x}{\partial \phi} - \frac{\partial x}{\partial \theta} \frac{\partial z}{\partial \phi}
+\vec{N}_y = \frac{\partial z}{\partial \theta} \frac{\partial x}{\partial \phi} - \frac{\partial x}{\partial \theta} \frac{\partial z}{\partial \phi}
 $$
 $$
-\mathbf{N}_z = \frac{\partial x}{\partial \theta} \frac{\partial y}{\partial \phi} - \frac{\partial y}{\partial \theta} \frac{\partial x}{\partial \phi}
+\vec{N}_z = \frac{\partial x}{\partial \theta} \frac{\partial y}{\partial \phi} - \frac{\partial y}{\partial \theta} \frac{\partial x}{\partial \phi}
 $$
 
 带入前面计算的偏导数后，得到：
 
 $$
-\mathbf{N} = 
+\vec{N} = 
 \begin{bmatrix}
 r \cos \phi (R + r \cos \phi) \cos \theta \\
 r \cos \phi (R + r \cos \phi) \sin \theta \\
@@ -164,5 +162,5 @@ $$
 所以，简化后的法向量为：
 
 $$
-\mathbf{N} = [\cos\theta \cos\phi, \sin\theta \cos\phi, \sin\phi]
+\vec{N} = [\cos\theta \cos\phi, \sin\theta \cos\phi, \sin\phi]
 $$
