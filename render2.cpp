@@ -15,7 +15,7 @@ int idx;
 
 float PI = 3.1415926535;
 float R = 20;  //大圆半径，绕z轴的圆的半径
-float r = 6;   //小圆半径，生成环面的圆的半径
+float r = 8;   //小圆半径，生成环面的圆的半径
 
 int width = 160, height = 44;
 float zBuffer[160 * 44];     //确定遮挡关系
@@ -24,10 +24,11 @@ int backgroundASCIICode = ' ';
 int distanceFromCam = 100;  //平移的距离。
 float K1 = 50;  // 透视投影的缩放系数，代表焦距
 
-float incrementSpeed = 0.09; //循环间隔
+// float incrementSpeed = 0.09; //循环间隔
+float incrementSpeed = 0.06; //循环间隔
 
 // 光源位置
-float lightX = -1, lightY = 1, lightZ = -0.5;
+float lightX = -1, lightY = 1, lightZ = -1;
 float lightMagnitude;
 
 // 初始化光源的方向
@@ -81,10 +82,10 @@ void caculateForSurface(float dX, float dY, float dZ, float nx, float ny, float 
             zBuffer[idx] = ooz;  //zbuffer算法，确定遮挡关系
 
             // 计算光强
-            float intensity = calculateLightIntensity(nx, ny, nz);
+            float intensity = calculateLightIntensity(x, y, z - distanceFromCam);
 
             // 根据光强选择字符
-            char luminance = "~+*:;=!@$&#"[(int)(intensity * 11)];
+            char luminance = "+*:;~=!@$&#"[(int)(intensity * 11)];
             buffer[idx] = luminance;
         }
     }
