@@ -43,7 +43,7 @@ $$
 因此，如果模型进行旋转，可以写为：
 
 $$
-[x, y, z] \quad @ \quad R_x(A) \quad @ \quad R_y(B) \quad @ \quad R_z(C)
+[x, y, z] \quad @ \quad R _x(A) \quad @ \quad R _y(B) \quad @ \quad R _z(C)
 $$
 
 其中@ 表示矩阵乘法， [x, y, z] 表示坐标向量。
@@ -110,39 +110,7 @@ $$
 
 #### 叉积计算法向量
 
-给定两个向量：
-$$
-\vec{a} = (a_1, a_2, a_3), \quad \vec{b} = (b_1, b_2, b_3)
-$$
-
-它们的叉积定义为：
-$$
-\vec{a} \times \vec{b} = \begin{vmatrix}
-\vec{i} & \vec{j} & \vec{k} \\
-a_1 & a_2 & a_3 \\
-b_1 & b_2 & b_3
-\end{vmatrix}
-$$
-
-展开行列式时，每个分量会用到代数余子式：
-
-$$
-\vec{a} \times \vec{b} =
-\vec{i} \begin{vmatrix} a_2 & a_3 \\ b_2 & b_3 \end{vmatrix} - \vec{j} \begin{vmatrix} a_1 & a_3 \\ b_1 & b_3 \end{vmatrix} + \vec{k} \begin{vmatrix} a_1 & a_2 \\ b_1 & b_2 \end{vmatrix}
-$$
-
-由此，我们开始计算 $N = \frac{\partial P}{\partial \theta} \times \frac{\partial P}{\partial \phi}$
-
-可得：
-$$
-\vec{N}_x = \frac{\partial y}{\partial \theta} \frac{\partial z}{\partial \phi} - \frac{\partial z}{\partial \theta} \frac{\partial y}{\partial \phi}
-$$
-$$
-\vec{N}_y = \frac{\partial z}{\partial \theta} \frac{\partial x}{\partial \phi} - \frac{\partial x}{\partial \theta} \frac{\partial z}{\partial \phi}
-$$
-$$
-\vec{N}_z = \frac{\partial x}{\partial \theta} \frac{\partial y}{\partial \phi} - \frac{\partial y}{\partial \theta} \frac{\partial x}{\partial \phi}
-$$
+![alt text](assert/image2.png)
 
 带入前面计算的偏导数后，得到：
 
